@@ -10,11 +10,18 @@
 
 namespace West\Uri\Factory;
 
-use West\Uri\Exception\InvalidArgumentException;
 use West\Uri\Host\Domain;
 use West\Uri\Host\IPv4;
 use West\Uri\UriInterface;
 
+/**
+ * @brief Absract RFC 3986 URI Factory.
+ *
+ * @see http://tools.ietf.org/html/rfc3986 URI specification
+ *
+ * @author Christopher Evans <c.m.evans@gmx.co.uk>
+ * @date 09 April 2017
+ */
 abstract class AbstractUriFactory implements UriFactoryInterface
 {
     /**
@@ -39,6 +46,14 @@ abstract class AbstractUriFactory implements UriFactoryInterface
      */
     private static $authorityRegex = '/^(?:(?P<user>.*?)@)?(?:(?P<domain>[a-z][a-z0-9\+\.-]*)|(?P<ipv4>\d{1,3}(\.\d{1,3}){3}))(?::(?P<port>\d+))?$/i';
 
+    /**
+     * @brief Break down URI into host, user, port, path, query
+     * and fragment components.
+     *
+     * @param string $uriString URI string
+     *
+     * @return array URI components
+     */
     protected function decomposeAndDecodeUri(string $uriString): array
     {
         // trim leading //
@@ -68,6 +83,14 @@ abstract class AbstractUriFactory implements UriFactoryInterface
         return [$host, $user, $port, $path, $query, $fragment];
     }
 
+    /**
+     * Chop a segment off the end of a string and URL decode the characters.
+     *
+     * @param string $character Character to truncate after
+     * @param string $uriString String to trim
+     *
+     * @return string Trimmed string
+     */
     private function trimAndDecode(string $character, string &$uriString): string
     {
         $trimmedString = '';
@@ -85,5 +108,8 @@ abstract class AbstractUriFactory implements UriFactoryInterface
         return $trimmedString;
     }
 
+    /**
+     * @see UriFactoryInterface
+     */
     public abstract function createFromString(string $uriString): UriInterface;
 }

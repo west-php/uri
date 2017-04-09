@@ -6,7 +6,7 @@
     "rfc-3986",
     "uri"
   ],
-  "homepage": "https://github.com/christopher-evans/west-php/uri",
+  "homepage": "https://github.com/west-php/uri",
   "license": "MIT",
   "authors": [
     {

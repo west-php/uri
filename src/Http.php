@@ -20,7 +20,7 @@ use West\Uri\Host\HostInterface;
  *
  * @author Christopher Evans <c.m.evans@gmx.co.uk>
  * @see UriInterface
- * @see http://www.php-fig.org/psr/psr-3/
+ * @see https://tools.ietf.org/html/rfc7230#section-2.7
  * @date 26 March 2017
  */
 final class Http extends Uri

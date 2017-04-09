@@ -12,16 +12,32 @@ namespace West\Uri\Host;
 
 use West\Uri\Exception\InvalidArgumentException;
 
+/**
+ * @brief %Domain host implementation
+ *
+ * @see http://tools.ietf.org/html/rfc3986#section-3.2.2 URI specification: host
+ *
+ * @author Christopher Evans <c.m.evans@gmx.co.uk>
+ * @date 09 April 2017
+ */
 final class Domain implements HostInterface
 {
-    /** @var string $domain Domain */
+    /**
+     * @brief Normalized domain string.
+     *
+     * @var string $domain
+     */
     private $domain;
 
-    /** @var string $subDomainRegex Domain component regex */
+    /**
+     * @brief Subdomain component regex.
+     *
+     * @var string $subDomainRegex
+     */
     private static $subDomainRegex = '/^(?:(?:[a-z]|[a-z][a-z0-9-]*[a-z0-9])(?:\.|$))+/i';//'/^[a-z][a-z0-9-]*[a-z0-9]$/i';
 
     /**
-     * Domain constructor.
+     * @brief Domain constructor.
      *
      * @param string $domain
      */
@@ -35,7 +51,7 @@ final class Domain implements HostInterface
     }
 
     /**
-     * Validate a domain string
+     * @brief Validate a domain string.
      *
      * @param string $domain
      *
@@ -48,9 +64,9 @@ final class Domain implements HostInterface
     }
 
     /**
-     * Parse a domain string to standardized format.
+     * @brief Parse a domain string to standardized format.
      *
-     * The value returned MUST be normalized to lowercase, per RFC 3986
+     * @details The value returned MUST be normalized to lowercase, per RFC 3986
      * Section 3.2.2.
      *
      * @param string $domain
@@ -64,7 +80,7 @@ final class Domain implements HostInterface
     }
 
     /**
-     * @see https://github.com/west-php/west-uri/blob/master/src/Host/Domain.php
+     * @see HostInterface
      */
     public function __toString(): string
     {

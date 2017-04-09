@@ -14,10 +14,27 @@ use West\Uri\Exception\InvalidArgumentException;
 use West\Uri\Http;
 use West\Uri\UriInterface;
 
+/**
+ * @brief Http(s) URI Factory.
+ *
+ * @see http://tools.ietf.org/html/rfc3986 URI specification
+ * @see https://tools.ietf.org/html/rfc7230#section-2.7 http(s) URI specification
+ *
+ * @author Christopher Evans <c.m.evans@gmx.co.uk>
+ * @date 09 April 2017
+ */
 final class HttpFactory extends AbstractUriFactory
 {
+    /**
+     * @brief Http(s) URI scheme component regex
+     *
+     * @var string
+     */
     private static $schemeRegex = '/^(https?):/i';
 
+    /**
+     * @see UriFactoryInterface
+     */
     public function createFromString(string $uriString): UriInterface
     {
         // trim scheme

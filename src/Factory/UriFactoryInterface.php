@@ -12,7 +12,22 @@ namespace West\Uri\Factory;
 
 use West\Uri\UriInterface;
 
+/**
+ * @brief Interface for an RFC 3986 URI factory.
+ *
+ * @see http://tools.ietf.org/html/rfc3986 URI specification
+ *
+ * @author Christopher Evans <c.m.evans@gmx.co.uk>
+ * @date 09 April 2017
+ */
 interface UriFactoryInterface
 {
+    /**
+     * @brief Build a URI object from a string.
+     *
+     * @param string $uriString URI string
+     *
+     * @return UriInterface URI object
+     */
     public function createFromString(string $uriString): UriInterface;
 }

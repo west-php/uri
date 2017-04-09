@@ -12,16 +12,32 @@ namespace West\Uri\Host;
 
 use West\Uri\Exception\InvalidArgumentException;
 
+/**
+ * @brief Interface for a URI host.
+ *
+ * @see http://tools.ietf.org/html/rfc3986#section-3.2.2 URI specification: host
+ *
+ * @author Christopher Evans <c.m.evans@gmx.co.uk>
+ * @date 09 April 2017
+ */
 final class IPv4 implements HostInterface
 {
-    /** @var string $address IPv4 Address */
+    /**
+     * @brief IP address string
+     *
+     * @var string $address IPv4 Address
+     */
     private $address;
 
-    /** @var string $subDomainRegex Domain component regex */
+    /**
+     * @brief IP address regex
+     *
+     * @var string $subDomainRegex
+     */
     private static $decOctetRegex = '/^(?:(?:[0-9]|[0-9][0-9]|[0-1][0-9][0-9]|2[0-4][0-9]|25[0-5])(?:\.|$)){4,4}/';
 
     /**
-     * IPv4 constructor.
+     * @brief IPv4 constructor.
      *
      * @param string $address
      */
@@ -35,7 +51,7 @@ final class IPv4 implements HostInterface
     }
 
     /**
-     * Validate a domain string
+     * @brief Validate a domain string
      *
      * @param string $address IPv4 address
      *
@@ -48,7 +64,7 @@ final class IPv4 implements HostInterface
     }
 
     /**
-     * Map address to canonical format
+     * @brief Map address to canonical format
      *
      * @param string $address IPv4 address
      *
@@ -60,7 +76,7 @@ final class IPv4 implements HostInterface
     }
 
     /**
-     * @see https://github.com/west-php/west-uri/blob/master/src/Host/Domain.php
+     * @see HostInterface
      */
     public function __toString(): string
     {
