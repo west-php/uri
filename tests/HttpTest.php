@@ -7,6 +7,7 @@ use West\Uri\Exception\DomainException;
 use West\Uri\Exception\InvalidArgumentException;
 use West\Uri\Host\Domain;
 use West\Uri\Host\HostInterface;
+use West\Uri\Host\NullHost;
 
 class HttpTest extends TestCase
 {
@@ -14,7 +15,7 @@ class HttpTest extends TestCase
     public function testWithScheme()
     {
         $host = new Domain('www.example.com');
-        $uri = (new Http('http', $host, '', null, '', '', ''))
+        $uri = (new Http('http', $host, '', 0, '', '', ''))
             ->withScheme('https');
 
         $expectedValue = 'https://www.example.com';
@@ -28,7 +29,7 @@ class HttpTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         $host = new Domain('www.example.com');
-        new Http('invalid', $host, '', null, '', '', '');
+        new Http('invalid', $host, '', 0, '', '', '');
     }
 
     /**
@@ -40,9 +41,7 @@ class HttpTest extends TestCase
     public function testValidScheme($scheme, $mappedScheme)
     {
         $host = new Domain('www.example.com');
-        $uri = new Http($scheme, $host, '', null, '', '', '');
-
-        $expectedValue = 'https://www.example.com';
+        $uri = new Http($scheme, $host, '', 0, '', '', '');
 
         $this->assertEquals($uri->getScheme(), $mappedScheme);
     }
@@ -62,8 +61,8 @@ class HttpTest extends TestCase
         $this->expectException(DomainException::class);
 
         $host = new Domain('www.example.com');
-        $uri = new Http('https', $host, '', null, '', '', 'fragment');
-        $relativeUri = new Http('https', $host, '', null, '', '', 'new-fragment');
+        $uri = new Http('https', $host, '', 0, '', '', 'fragment');
+        $relativeUri = new Http('https', $host, '', 0, '', '', 'new-fragment');
 
         $uri->resolveRelative($relativeUri);
     }
@@ -86,15 +85,16 @@ class HttpTest extends TestCase
     {
         $host = new Domain('www.example.com');
         $relativeHost = new Domain('www.test.com');
+        $nullHost = new NullHost();
 
         $baseUri = new Http('http', $host, 'username', 80, '/a/b/c', 'query', '');
 
-        $relativeUriScheme = new Http('https', $host, '', null, '', '', '');
+        $relativeUriScheme = new Http('https', $host, '', 0, '', '', '');
         $relativeUriAuthority = new RelativeUri($relativeHost, 'user', 40, '', '', '');
-        $relativeNoAuthorityNoPath = new RelativeUri(null, '', null, '', '', '');
-        $relativeNoAuthorityNoPathQuery = new RelativeUri(null, '', null, '', 'new-query', '');
-        $relativeNoAuthorityPath = new RelativeUri(null, '', null, '/a/b/c', '', '');
-        $relativeNoAuthorityPathMerge = new RelativeUri(null, '', null, 'd/e/f', '', '');
+        $relativeNoAuthorityNoPath = new RelativeUri($nullHost, '', 0, '', '', '');
+        $relativeNoAuthorityNoPathQuery = new RelativeUri($nullHost, '', 0, '', 'new-query', '');
+        $relativeNoAuthorityPath = new RelativeUri($nullHost, '', 0, '/a/b/c', '', '');
+        $relativeNoAuthorityPathMerge = new RelativeUri($nullHost, '', 0, 'd/e/f', '', '');
 
         return [
             [$baseUri, $relativeUriScheme, 'https://www.example.com'],
@@ -116,8 +116,8 @@ class HttpTest extends TestCase
     public function testPathMerge($basePath, $relativePath, $expectedResult)
     {
         $host = new Domain('www.example.com');
-        $baseUri = new Http('http', $host, '', null, $basePath, '', '');
-        $relativeUri = new RelativeUri(null, '', null, $relativePath, '', '');
+        $baseUri = new Http('http', $host, '', 0, $basePath, '', '');
+        $relativeUri = new RelativeUri(new NullHost(), '', 0, $relativePath, '', '');
 
         $resolvedUri = $baseUri->resolveRelative($relativeUri);
 
@@ -158,5 +158,4 @@ class HttpTest extends TestCase
             ['/b/c/d', 'g;x=1/../y', '/b/c/y'],
         ];
     }
-
 }

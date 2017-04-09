@@ -77,7 +77,7 @@ interface UriInterface
     /**
      * @brief Retrieve the host component of the URI.
      *
-     * @details If no host is present, this method MUST return `null`.
+     * @details If no host is present, this method MUST return a NullHost.
      *
      * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
      * @see Host::HostInterface
@@ -92,15 +92,14 @@ interface UriInterface
      * @details If a port is present, and it is non-standard for the current scheme,
      * this method MUST return it as an integer.
      *
-     * If no port is present, this method MUST return
-     * a null value.
+     * If no port is present, this method MUST return 0
      *
      * If no port is present, but a scheme is present, this method MAY return
-     * the standard port for that scheme, but SHOULD return null.
+     * the standard port for that scheme, but SHOULD return 0.
      *
-     * @return null|int The URI port.
+     * @return int The URI port.
      */
-    public function getPort(): ?int;
+    public function getPort(): int;
 
     /**
      * @brief Retrieve the path component of the URI.

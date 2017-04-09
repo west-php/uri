@@ -49,7 +49,7 @@ abstract class Uri implements UriInterface
     /**
      * Port
      *
-     * @var $port int|null
+     * @var $port int
      */
     private $port;
 
@@ -102,18 +102,18 @@ abstract class Uri implements UriInterface
      * Uri constructor.
      *
      * @param string $scheme
-     * @param null|HostInterface $host
+     * @param HostInterface $host
      * @param string $user
-     * @param int|null $port
+     * @param int $port
      * @param string $path
      * @param string $query
      * @param string $fragment
      */
     public function __construct(
         string $scheme,
-        ?HostInterface $host,
+        HostInterface $host,
         string $user,
-        ?int $port,
+        int $port,
         string $path,
         string $query,
         string $fragment
@@ -124,7 +124,7 @@ abstract class Uri implements UriInterface
         if (! $this->isValidPort($port)) {
             throw new InvalidArgumentException(sprintf('Invalid port: %s', $port));
         }
-        if (! $this->isValidPath($path, $host || $user || $port !== null)) {
+        if (! $this->isValidPath($path, (string) $host || $user || $port !== 0)) {
             throw new InvalidArgumentException(sprintf('Invalid path: %s', $path));
         }
 
@@ -158,11 +158,12 @@ abstract class Uri implements UriInterface
             $user = $user . '@';
         }
 
-        if ($port !== null) {
-            $port = ':' . $port;
+        $portString = '';
+        if ($port !== 0) {
+            $portString = ':' . $port;
         }
 
-        return $user . $this->host . $port;
+        return $user . $this->host . $portString;
     }
 
     /**
@@ -184,7 +185,7 @@ abstract class Uri implements UriInterface
     /**
      * @see UriInterface::getPort
      */
-    public function getPort(): ?int
+    public function getPort(): int
     {
         return $this->port;
     }
@@ -246,13 +247,13 @@ abstract class Uri implements UriInterface
     /**
      * @brief Validate port
      *
-     * @param int|null $port
+     * @param int $port
      *
      * @return bool
      */
-    private function isValidPort(?int $port)
+    private function isValidPort(int $port)
     {
-        return $port === null || $port >= 0 && ($port < 1 << 16);
+        return $port >= 0 && ($port < 1 << 16);
     }
 
     /**
@@ -540,6 +541,6 @@ abstract class Uri implements UriInterface
      */
     public function hasAuthority(): bool
     {
-        return $this->host || $this->user || $this->port !== null;
+        return (string) $this->host || $this->user || $this->port !== 0;
     }
 }

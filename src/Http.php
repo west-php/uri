@@ -31,7 +31,7 @@ final class Http extends Uri
      * @param string $scheme
      * @param HostInterface $host
      * @param string $user
-     * @param int|null $port
+     * @param int $port
      * @param string $path
      * @param string $query
      * @param string $fragment
@@ -40,7 +40,7 @@ final class Http extends Uri
         string $scheme,
         HostInterface $host,
         string $user,
-        ?int $port,
+        int $port,
         string $path,
         string $query,
         string $fragment

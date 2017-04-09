@@ -5,3 +5,7 @@
 - Consider performance using `sprintf`
 
 - Add IPv6 addresses
+
+- Add mailto URI
+
+- Make `withScheme` method part of an interface.

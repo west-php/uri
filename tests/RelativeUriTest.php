@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use West\Uri\Exception\InvalidArgumentException;
 use West\Uri\Host\Domain;
 use West\Uri\Host\HostInterface;
+use West\Uri\Host\NullHost;
 
 class RelativeUriTest extends TestCase
 {
@@ -92,7 +93,7 @@ class RelativeUriTest extends TestCase
             [
                 $host,
                 'user@name',
-                null,
+                0,
                 '/a/b/c',
                 'key=value&another=value',
                 'valid-fragment',
@@ -104,7 +105,7 @@ class RelativeUriTest extends TestCase
             [
                 $host,
                 'username',
-                null,
+                0,
                 '/a/b/c?',
                 'key=value&another=value',
                 'valid-fragment',
@@ -116,7 +117,7 @@ class RelativeUriTest extends TestCase
             [
                 $host,
                 'username',
-                null,
+                0,
                 '/a/b/c',
                 'key=value&another=value#',
                 'valid-fragment',
@@ -128,7 +129,7 @@ class RelativeUriTest extends TestCase
             [
                 $host,
                 'username',
-                null,
+                0,
                 '/a/b/c',
                 'key=value&another=value',
                 'valid-fragment#',
@@ -146,7 +147,7 @@ class RelativeUriTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new RelativeUri(null, '', null, '//a/b', '', '');
+        new RelativeUri(new NullHost(), '', 0, '//a/b', '', '');
     }
 
     /**
@@ -160,7 +161,7 @@ class RelativeUriTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new RelativeUri(null, '', $port, '/a/b', '', '');
+        new RelativeUri(new NullHost(), '', $port, '/a/b', '', '');
     }
 
     public function providerTestInvalidPort()
@@ -177,7 +178,7 @@ class RelativeUriTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new RelativeUri(null, 'user:colon', null, '/a/b', '', '');
+        new RelativeUri(new NullHost(), 'user:colon', 0, '/a/b', '', '');
     }
 
     /**
@@ -190,7 +191,7 @@ class RelativeUriTest extends TestCase
      */
     public function testAbsolute($fragment, $isAbsolute)
     {
-        $relativeUri = new RelativeUri(null, 'usercolon', null, '/a/b', '', $fragment);
+        $relativeUri = new RelativeUri(new NullHost(), 'usercolon', 0, '/a/b', '', $fragment);
 
         $this->assertEquals($relativeUri->isAbsoluteUri(), $isAbsolute);
     }
@@ -217,18 +218,19 @@ class RelativeUriTest extends TestCase
     {
         $relativeUri = new RelativeUri($host, $user, $port, '/a/b', '', '');
 
-        $this->assertEquals($relativeUri->hasAuthority(), $hasAuthority);
+        $this->assertEquals($hasAuthority, $relativeUri->hasAuthority());
     }
 
     public function providerTestHasAuthority()
     {
         $host = new Domain('www.example.com');
+        $nullHost = new NullHost();
 
         return [
-            [null, '', null, false],
-            [$host, '', null, true],
-            [null, 'user', null, true],
-            [null, '', 40, true]
+            [$nullHost, '', 0, false],
+            [$host, '', 0, true],
+            [$nullHost, 'user', 0, true],
+            [$nullHost, '', 40, true]
         ];
     }
 }

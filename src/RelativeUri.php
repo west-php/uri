@@ -27,10 +27,20 @@ use West\Uri\Host\HostInterface;
  */
 final class RelativeUri extends Uri
 {
+    /**
+     * RelativeUri constructor.
+     *
+     * @param HostInterface $host
+     * @param string $user
+     * @param int $port
+     * @param string $path
+     * @param string $query
+     * @param string $fragment
+     */
     public function __construct(
-        ?HostInterface $host,
+        HostInterface $host,
         string $user,
-        ?int $port,
+        int $port,
         string $path,
         string $query,
         string $fragment
