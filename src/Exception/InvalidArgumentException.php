@@ -25,7 +25,7 @@ use InvalidArgumentException as RootInvalidArgumentException;
  *
  * @date 09 April 2017
  */
-class InvalidArgumentException extends RootInvalidArgumentException
+final class InvalidArgumentException extends RootInvalidArgumentException
 {
 
 }

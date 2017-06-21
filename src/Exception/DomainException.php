@@ -25,7 +25,7 @@ use DomainException as RootDomainException;
  *
  * @date 09 April 2017
  */
-class DomainException extends RootDomainException
+final class DomainException extends RootDomainException
 {
 
 }

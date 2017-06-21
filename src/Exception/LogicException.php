@@ -25,7 +25,7 @@ use LogicException as RootLogicException;
  *
  * @date 09 April 2017
  */
-class LogicException extends RootLogicException
+final class LogicException extends RootLogicException
 {
 
 }

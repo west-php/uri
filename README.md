@@ -93,7 +93,6 @@ In particular:
 [PHPUnit]: http://phpunit.de/
 [PHPBench]: https://github.com/phpbench/phpbench
 [PHPBenchDocs]: http://phpbench.readthedocs.io/en/latest/
-[west-php/uri]: https://packagist.org/packages/aura/di
 [composer.json]: ./composer.json
 [Object Thinking]: http://davewest.us/product/object-thinking/
 [Yegor Bugayenko]: http://www.yegor256.com/

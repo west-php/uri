@@ -22,9 +22,9 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.1.0",
-    "phpmetrics/phpmetrics": "^2.0.0",
-    "phpbench/phpbench": "^1.0@dev"
+    "phpunit/phpunit": "^6.2.2",
+    "phpmetrics/phpmetrics": "^2.2.0",
+    "phpbench/phpbench": "^0.13.0"
   },
   "autoload-dev": {
     "psr-4": {
